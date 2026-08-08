@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { PRICING_TIERS } from "@/lib/data";
 import { cn } from "@/lib/utils";
-import GlassCard from "@/components/GlassCard";
-import LiquidButton from "@/components/LiquidButton";
 
 export default function Pricing(): React.ReactElement {
   return (
@@ -18,10 +16,10 @@ export default function Pricing(): React.ReactElement {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
             Plans that scale with you
           </h2>
-          <p className="mt-4 text-base text-slate-500">
+          <p className="mt-4 text-base text-slate-500 dark:text-slate-400">
             Choose the perfect tier for your business needs.
           </p>
         </motion.div>
@@ -29,11 +27,17 @@ export default function Pricing(): React.ReactElement {
         <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-start">
           {PRICING_TIERS.map((tier, i) => (
             <div key={tier.id} className={cn(tier.featured && "lg:-translate-y-4")}>
-              <GlassCard
-                delay={i * 0.1}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
                 className={cn(
-                  "flex flex-col items-center p-8 text-center",
-                  tier.featured && "ring-2 ring-blue-500/40 shadow-2xl shadow-blue-500/15"
+                  "relative flex flex-col items-center overflow-hidden rounded-3xl border p-8 text-center transition-shadow duration-300",
+                  tier.featured
+                    ? "border-blue-500/40 bg-white shadow-2xl shadow-blue-500/15 dark:border-blue-500/30 dark:bg-slate-900"
+                    : "border-slate-200 bg-white shadow-lg shadow-slate-900/5 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"
                 )}
               >
                 {tier.featured && (
@@ -49,36 +53,48 @@ export default function Pricing(): React.ReactElement {
                   </span>
                 )}
 
-                <h3 className="relative text-lg font-bold text-slate-900">{tier.name}</h3>
+                <h3 className="relative text-lg font-bold text-slate-900 dark:text-white">
+                  {tier.name}
+                </h3>
                 <div className="relative mt-2 flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold tracking-tight text-slate-900">
+                  <span className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                     {tier.price}
                   </span>
                   {tier.cadence && (
-                    <span className="text-sm font-medium text-slate-500">{tier.cadence}</span>
+                    <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                      {tier.cadence}
+                    </span>
                   )}
                 </div>
-                <p className="relative mt-3 max-w-[220px] text-sm leading-relaxed text-slate-500">
+                <p className="relative mt-3 max-w-[220px] text-sm leading-relaxed text-slate-500 dark:text-slate-400">
                   {tier.description}
                 </p>
 
-                <LiquidButton
+                {/* CTA buttons — solid slate for standard, blue gradient for featured */}
+                <a
                   href="#top"
-                  variant={tier.featured ? "liquid" : "glass"}
-                  className="relative mt-6 w-full"
+                  className={cn(
+                    "relative mt-6 flex w-full min-h-[48px] items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-200 active:scale-[0.98] sm:text-base",
+                    tier.featured
+                      ? "bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/25 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-500/40"
+                      : "bg-slate-900 text-white shadow-md hover:bg-slate-800 hover:shadow-lg dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+                  )}
                 >
                   {tier.ctaLabel}
-                </LiquidButton>
+                </a>
 
                 <ul className="relative mx-auto mt-8 flex w-fit flex-col items-start gap-3">
                   {tier.checklist.map((item) => (
-                    <li key={item} className="flex items-center gap-2.5 text-sm text-slate-700">
+                    <li
+                      key={item}
+                      className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300"
+                    >
                       <Check className="h-4 w-4 shrink-0 text-blue-600" aria-hidden="true" />
                       {item}
                     </li>
                   ))}
                 </ul>
-              </GlassCard>
+              </motion.div>
             </div>
           ))}
         </div>
