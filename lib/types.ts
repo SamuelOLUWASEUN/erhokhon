@@ -13,7 +13,6 @@ export interface BentoFeature {
   title: string;
   description: string;
   visual: "insight" | "transfer" | "wallet" | "encryption" | "support" | "freeze";
-  span: "col-span-1" | "col-span-2";
 }
 
 export interface RoadmapStep {

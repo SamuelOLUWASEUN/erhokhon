@@ -14,9 +14,6 @@ export const AVATAR_URLS: readonly string[] = [
   "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
 ];
 
-export const HERO_IMAGE_URL =
-  "https://images.unsplash.com/photo-1556742049-0a670f4a4591?auto=format&fit=crop&q=80&w=1000";
-
 export const METRIC_CARDS: readonly MetricCard[] = [
   {
     id: "active-users",
@@ -56,42 +53,36 @@ export const BENTO_FEATURES: readonly BentoFeature[] = [
     title: "AI Spending Insight",
     description: "Send money or transfer instantly with zero fee.",
     visual: "insight",
-    span: "col-span-1",
   },
   {
     id: "global-transfers",
     title: "Instant Global Transfers",
     description: "Send money around the world in seconds with zero fees.",
     visual: "transfer",
-    span: "col-span-2",
   },
   {
     id: "multi-currency",
     title: "Multi-Currency Wallet",
     description: "Hold and exchange multiple currencies in app.",
     visual: "wallet",
-    span: "col-span-1",
   },
   {
     id: "encryption",
     title: "Bank-Level Encryption",
     description: "Your data protected with 256-bit encryption.",
     visual: "encryption",
-    span: "col-span-1",
   },
   {
     id: "support",
     title: "24/7 Support",
     description: "Get help whenever you need it.",
     visual: "support",
-    span: "col-span-1",
   },
   {
     id: "freeze-card",
     title: "Freeze Card Instantly",
     description: "Lock your card anytime to prevent unauthorized use.",
     visual: "freeze",
-    span: "col-span-1",
   },
 ];
 
@@ -195,11 +186,4 @@ export const TESTIMONIALS: readonly Testimonial[] = [
     avatarUrl:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
   },
-];
-
-export const TRANSACTIONS: readonly { label: string; amount: string }[] = [
-  { label: "Netflix", amount: "-$12.99" },
-  { label: "Taxi", amount: "-$4.50" },
-  { label: "Uber Eats", amount: "-$21.30" },
-  { label: "PayPal", amount: "+$540.00" },
 ];
