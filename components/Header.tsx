@@ -22,7 +22,8 @@ function useDarkMode(): { dark: boolean; toggle: () => void } {
 
   useEffect(() => {
     const stored = localStorage.getItem("erhokhon-theme");
-    const prefersDark = stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    // Default to light for new visitors — only honor dark if explicitly chosen
+    const prefersDark = stored === "dark";
     setDark(prefersDark);
     document.documentElement.classList.toggle("dark", prefersDark);
   }, []);
@@ -141,7 +142,7 @@ export default function Header(): React.ReactElement {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={() => setDrawerOpen(false)}
-              className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-md md:hidden"
               aria-hidden="true"
             />
 
@@ -152,21 +153,14 @@ export default function Header(): React.ReactElement {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 350, damping: 30 }}
-              className="fixed bottom-0 right-0 top-0 z-50 flex w-[280px] flex-col justify-between border-l border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-800 dark:bg-slate-900 sm:w-[320px] md:hidden"
+              className="fixed bottom-0 right-0 top-0 z-50 flex w-[280px] flex-col justify-between bg-white p-6 shadow-2xl dark:bg-slate-900 sm:w-[320px] md:hidden"
               role="dialog"
               aria-modal="true"
               aria-label="Navigation menu"
             >
-              {/* Drawer header */}
+              {/* Close button — right-aligned, no duplicate brand */}
               <div>
-                <div className="flex items-center justify-between">
-                  <a
-                    href="#top"
-                    onClick={() => setDrawerOpen(false)}
-                    className="flex items-center gap-1 text-lg font-bold text-slate-900 dark:text-white"
-                  >
-                    Erhokhon<span className="text-blue-600">.</span>
-                  </a>
+                <div className="mb-6 flex w-full justify-end">
                   <button
                     type="button"
                     onClick={() => setDrawerOpen(false)}
