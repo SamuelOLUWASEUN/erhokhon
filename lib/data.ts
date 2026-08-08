@@ -187,3 +187,10 @@ export const TESTIMONIALS: readonly Testimonial[] = [
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
   },
 ];
+
+export const TRANSACTIONS: readonly { label: string; amount: string }[] = [
+  { label: "Netflix", amount: "-$12.99" },
+  { label: "Taxi", amount: "-$4.50" },
+  { label: "Uber Eats", amount: "-$21.30" },
+  { label: "PayPal", amount: "+$540.00" },
+];

@@ -2,47 +2,12 @@
 
 import { useId } from "react";
 import { motion } from "framer-motion";
-import { Headset, ShieldCheck, Snowflake, Sparkles } from "lucide-react";
+import { Headset, Snowflake } from "lucide-react";
 import { BENTO_FEATURES } from "@/lib/data";
 import type { BentoFeature } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import GlassCard from "@/components/GlassCard";
-import LottieVisual from "@/components/LottieVisual";
-
-/**
- * Deterministic pseudo-variance so the dot grid reads as organic rather than
- * a perfect lattice, without touching Math.random (which would produce a
- * server/client hydration mismatch on a static export).
- */
-function dotOpacity(row: number, col: number): number {
-  return 0.12 + 0.32 * ((Math.sin(row * 1.7 + col * 0.9) + 1) / 2);
-}
-
-/** Stylized "global network" dot field — an abstract texture, not a literal map. */
-function WorldMapDots(): React.ReactElement {
-  const cols = 16;
-  const rows = 7;
-  const dots = [];
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      dots.push(
-        <circle
-          key={`${row}-${col}`}
-          cx={10 + col * 19}
-          cy={10 + row * 18}
-          r={1.6}
-          fill="#2563eb"
-          opacity={dotOpacity(row, col)}
-        />
-      );
-    }
-  }
-  return (
-    <svg viewBox="0 0 300 130" className="absolute inset-0 h-full w-full" aria-hidden="true">
-      {dots}
-    </svg>
-  );
-}
+import { RadarScanVisual, GlobalNetworkVisual, ShieldCheckVisual } from "@/components/BentoAnimations";
 
 /**
  * Procedural frosted/icy surface: blurred color blobs behind a translucent
@@ -80,69 +45,6 @@ function FrostedIce({
   );
 }
 
-function InsightVisual(): React.ReactElement {
-  const fallback = (
-    <div className="glass-surface flex items-center gap-2 rounded-2xl px-4 py-3">
-      <Sparkles className="h-4 w-4 shrink-0 text-blue-600" aria-hidden="true" />
-      <p className="text-xs font-medium text-slate-700">
-        Transfer <span className="font-semibold text-slate-900">$250</span> to
-        Sarah — zero fee
-      </p>
-    </div>
-  );
-
-  return (
-    <LottieVisual
-      src="/lottie/ai-insight-scan.lottie"
-      fallback={fallback}
-      className="h-14"
-      ariaLabel="AI scanning a spending pattern"
-    />
-  );
-}
-
-function TransferVisual(): React.ReactElement {
-  const nodes = [
-    { symbol: "$", pos: "left-2 top-2" },
-    { symbol: "¥", pos: "right-4 top-6" },
-    { symbol: "€", pos: "left-1/3 bottom-2" },
-  ];
-
-  const fallback = (
-    <div className="relative h-32 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50">
-      <WorldMapDots />
-      <svg viewBox="0 0 300 100" className="absolute inset-0 h-full w-full" aria-hidden="true">
-        <line x1="30" y1="20" x2="150" y2="50" stroke="#93c5fd" strokeWidth="1.5" strokeDasharray="4 4" />
-        <line x1="150" y1="50" x2="260" y2="30" stroke="#93c5fd" strokeWidth="1.5" strokeDasharray="4 4" />
-        <line x1="150" y1="50" x2="110" y2="85" stroke="#93c5fd" strokeWidth="1.5" strokeDasharray="4 4" />
-      </svg>
-      {nodes.map((node) => (
-        <div
-          key={node.symbol}
-          className={cn(
-            "absolute flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-bold text-blue-600 shadow-md",
-            node.pos
-          )}
-        >
-          {node.symbol}
-        </div>
-      ))}
-      <div className="absolute left-1/2 top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-xs font-bold text-white shadow-lg">
-        £
-      </div>
-    </div>
-  );
-
-  return (
-    <LottieVisual
-      src="/lottie/global-transfer-nodes.lottie"
-      fallback={fallback}
-      className="h-32"
-      ariaLabel="Currency nodes connecting across a global transfer network"
-    />
-  );
-}
-
 function WalletVisual(): React.ReactElement {
   return (
     <FrostedIce className="h-24">
@@ -153,35 +55,6 @@ function WalletVisual(): React.ReactElement {
         ₦
       </div>
     </FrostedIce>
-  );
-}
-
-function EncryptionVisual(): React.ReactElement {
-  const fallback = (
-    <div className="relative flex items-center gap-3 overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 px-4 py-3.5">
-      <svg className="absolute inset-0 h-full w-full opacity-10" aria-hidden="true">
-        <pattern id="encDots" width="10" height="10" patternUnits="userSpaceOnUse">
-          <circle cx="1.5" cy="1.5" r="1" fill="white" />
-        </pattern>
-        <rect width="100%" height="100%" fill="url(#encDots)" />
-      </svg>
-      <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/95 shadow-sm">
-        <ShieldCheck className="h-5 w-5 text-blue-600" aria-hidden="true" />
-      </div>
-      <div className="relative">
-        <p className="text-xs font-semibold text-white">Card protected</p>
-        <p className="text-[11px] tracking-wider text-white/75">•••• •••• •••• 2163</p>
-      </div>
-    </div>
-  );
-
-  return (
-    <LottieVisual
-      src="/lottie/shield-lock-close.lottie"
-      fallback={fallback}
-      className="h-[68px]"
-      ariaLabel="Shield closing to indicate 256-bit encryption"
-    />
   );
 }
 
@@ -206,10 +79,10 @@ function SupportCard({
 }
 
 const VISUALS: Record<Exclude<BentoFeature["visual"], "support" | "freeze">, React.ComponentType> = {
-  insight: InsightVisual,
-  transfer: TransferVisual,
+  insight: RadarScanVisual,
+  transfer: GlobalNetworkVisual,
   wallet: WalletVisual,
-  encryption: EncryptionVisual,
+  encryption: ShieldCheckVisual,
 };
 
 export default function BentoGrid(): React.ReactElement {

@@ -11,7 +11,7 @@ function WaveGraphic(): React.ReactElement {
     <svg
       viewBox="0 0 300 100"
       fill="none"
-      className="absolute bottom-0 right-0 h-24 w-full opacity-70"
+      className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-16 w-full opacity-40"
       aria-hidden="true"
     >
       <path
@@ -72,7 +72,7 @@ export default function SocialProof(): React.ReactElement {
                 </div>
               )}
 
-              <div className="relative mt-auto">
+              <div className="relative z-10 mt-auto">
                 <p
                   className={cn(
                     "text-3xl font-extrabold tracking-tight",

@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowUpRight, PlayCircle, Sparkles } from "lucide-react";
+import { ArrowUpRight, PlayCircle } from "lucide-react";
 import LiquidButton from "@/components/LiquidButton";
+import { TRANSACTIONS } from "@/lib/data";
 
 export default function Hero(): React.ReactElement {
   return (
@@ -65,23 +66,70 @@ export default function Hero(): React.ReactElement {
             />
           </div>
 
-          {/* Small live-status badge — complements the baked-in app UI without duplicating it */}
+          {/* Floating balance card */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: [0, -8, 0] }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: [0, -10, 0] }}
             transition={{
-              opacity: { duration: 0.6, delay: 0.6 },
-              y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.6 },
+              opacity: { duration: 0.6, delay: 0.5 },
+              y: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
             }}
-            whileHover={{ scale: 1.04 }}
-            className="glass-surface absolute -left-4 top-6 flex items-center gap-2 rounded-full px-4 py-2 sm:-left-8"
+            whileHover={{ scale: 1.02 }}
+            className="glass-surface absolute -left-6 bottom-10 w-56 rounded-3xl p-4 sm:-left-10"
           >
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            <Sparkles className="h-3.5 w-3.5 text-blue-600" aria-hidden="true" />
-            <span className="text-xs font-semibold text-slate-700">Live &amp; encrypted</span>
+            <p className="text-xs font-medium text-slate-500">Total Balance</p>
+            <p className="mt-1 text-2xl font-bold tracking-tight text-slate-900">
+              $1,648.00
+            </p>
+
+            <svg viewBox="0 0 200 40" className="mt-3 h-8 w-full" aria-hidden="true">
+              <motion.path
+                d="M0 30 L25 22 L50 26 L75 12 L100 18 L125 8 L150 14 L175 4 L200 10"
+                fill="none"
+                stroke="url(#balanceGradient)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.4, ease: "easeOut", delay: 0.8 }}
+              />
+              <defs>
+                <linearGradient id="balanceGradient" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#2563eb" />
+                  <stop offset="100%" stopColor="#4f46e5" />
+                </linearGradient>
+              </defs>
+            </svg>
+
+            <div className="mt-3 flex flex-col gap-2">
+              {TRANSACTIONS.map((tx) => {
+                const isIncoming = tx.amount.startsWith("+");
+                return (
+                  <div key={tx.label} className="flex items-center justify-between text-xs">
+                    <span className="flex items-center gap-1.5 text-slate-500">
+                      {tx.label}
+                      {isIncoming && (
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                        </span>
+                      )}
+                    </span>
+                    <span
+                      className={
+                        isIncoming
+                          ? "font-semibold text-emerald-600"
+                          : "font-semibold text-slate-700"
+                      }
+                    >
+                      {tx.amount}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </motion.div>
         </motion.div>
       </div>
