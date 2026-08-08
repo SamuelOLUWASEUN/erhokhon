@@ -8,28 +8,23 @@ import GlassCard from "@/components/GlassCard";
 import LiquidButton from "@/components/LiquidButton";
 
 function LiveStars(): React.ReactElement {
-  const stars = [0, 1, 2, 3, 4];
   return (
-    <div className="flex items-center gap-1" aria-hidden="true">
-      {stars.map((i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, scale: 0.4, rotate: -20 }}
-          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.35, delay: 0.2 + i * 0.08, ease: "backOut" }}
-        >
-          <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-        </motion.span>
-      ))}
-    </div>
+    <motion.span
+      initial={{ opacity: 0, scale: 0.4, rotate: -20 }}
+      whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.35, delay: 0.2, ease: "backOut" }}
+      aria-hidden="true"
+    >
+      <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+    </motion.span>
   );
 }
 
 export default function Testimonials(): React.ReactElement {
   return (
     <>
-      <section id="testimonials" className="px-4 py-20 sm:py-28">
+      <section id="testimonials" className="scroll-mt-20 px-4 py-20 sm:py-28">
         <div className="mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 16 }}

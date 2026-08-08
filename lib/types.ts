@@ -4,8 +4,7 @@ export interface MetricCard {
   value: string;
   label: string;
   description?: string;
-  showAvatars?: boolean;
-  showWaveGraphic?: boolean;
+  visual?: "avatars" | "uptime" | "fees" | "wave";
 }
 
 export interface BentoFeature {

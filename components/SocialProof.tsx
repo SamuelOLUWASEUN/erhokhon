@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Coins, ShieldCheck } from "lucide-react";
 import { AVATAR_URLS, METRIC_CARDS } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import GlassCard from "@/components/GlassCard";
@@ -31,6 +32,53 @@ function WaveGraphic(): React.ReactElement {
   );
 }
 
+/** Small ring that draws itself to ~99.99%, giving the uptime figure a live, measured feel. */
+function UptimeRing(): React.ReactElement {
+  const radius = 18;
+  const circumference = 2 * Math.PI * radius;
+
+  return (
+    <div className="relative flex h-11 w-11 items-center justify-center">
+      <svg viewBox="0 0 44 44" className="h-11 w-11 -rotate-90" aria-hidden="true">
+        <circle cx="22" cy="22" r={radius} fill="none" stroke="#e2e8f0" strokeWidth="4" />
+        <motion.circle
+          cx="22"
+          cy="22"
+          r={radius}
+          fill="none"
+          stroke="#10b981"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          initial={{ strokeDashoffset: circumference }}
+          whileInView={{ strokeDashoffset: circumference * 0.012 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.3, ease: "easeOut", delay: 0.3 }}
+        />
+      </svg>
+      <span className="absolute flex h-2.5 w-2.5">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+      </span>
+    </div>
+  );
+}
+
+/** Coin badge with a spring pop-in — gives the $0 fees card the same sense of life as the others. */
+function FeesBadge(): React.ReactElement {
+  return (
+    <motion.div
+      initial={{ scale: 0.7, opacity: 0, rotate: -12 }}
+      whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
+      viewport={{ once: true }}
+      transition={{ type: "spring", stiffness: 260, damping: 16, delay: 0.2 }}
+      className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-50"
+    >
+      <Coins className="h-5 w-5 text-emerald-600" aria-hidden="true" />
+    </motion.div>
+  );
+}
+
 export default function SocialProof(): React.ReactElement {
   return (
     <section className="px-4 py-20 sm:py-28">
@@ -56,9 +104,9 @@ export default function SocialProof(): React.ReactElement {
               key={card.id}
               variant={card.variant === "accent" ? "accent" : "glass"}
               delay={i * 0.08}
-              className="flex min-h-[220px] flex-col justify-between p-6"
+              className="flex min-h-[220px] flex-col items-center justify-between p-6 text-center"
             >
-              {card.showAvatars && (
+              {card.visual === "avatars" && (
                 <div className="relative flex -space-x-3">
                   {AVATAR_URLS.map((url, idx) => (
                     <div
@@ -69,6 +117,13 @@ export default function SocialProof(): React.ReactElement {
                       <Image src={url} alt="" fill sizes="36px" className="object-cover" />
                     </div>
                   ))}
+                </div>
+              )}
+              {card.visual === "uptime" && <UptimeRing />}
+              {card.visual === "fees" && <FeesBadge />}
+              {card.visual === "wave" && (
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15">
+                  <ShieldCheck className="h-5 w-5 text-white" aria-hidden="true" />
                 </div>
               )}
 
@@ -103,7 +158,7 @@ export default function SocialProof(): React.ReactElement {
                 )}
               </div>
 
-              {card.showWaveGraphic && <WaveGraphic />}
+              {card.visual === "wave" && <WaveGraphic />}
             </GlassCard>
           ))}
         </div>

@@ -22,19 +22,23 @@ export const METRIC_CARDS: readonly MetricCard[] = [
     label: "Active Users",
     description:
       "Our features sets us apart. For every transaction, there is a reassurance.",
-    showAvatars: true,
+    visual: "avatars",
   },
   {
     id: "uptime",
     variant: "default",
     value: "99.99%",
     label: "Total Product Uptime",
+    description: "All systems operational",
+    visual: "uptime",
   },
   {
     id: "fees",
     variant: "default",
     value: "$0",
     label: "Transaction fees",
+    description: "Always free, no hidden charges",
+    visual: "fees",
   },
   {
     id: "global",
@@ -43,7 +47,7 @@ export const METRIC_CARDS: readonly MetricCard[] = [
     label: "",
     description:
       "We have active users with incredible uptime across the world's continent",
-    showWaveGraphic: true,
+    visual: "wave",
   },
 ];
 

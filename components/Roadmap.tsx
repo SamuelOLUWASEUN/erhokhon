@@ -1,9 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Globe2, UserPlus, Wallet } from "lucide-react";
 import { ROADMAP_STEPS } from "@/lib/data";
 import LiquidButton from "@/components/LiquidButton";
+import type { LucideIcon } from "lucide-react";
+
+const STEP_ICONS: Record<string, LucideIcon> = {
+  "create-account": UserPlus,
+  "add-funds": Wallet,
+  "transact-globally": Globe2,
+};
 
 export default function Roadmap(): React.ReactElement {
   return (
@@ -25,21 +32,15 @@ export default function Roadmap(): React.ReactElement {
         </motion.div>
 
         <div className="relative mt-16 grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-6">
-          {/* Connector rail */}
+          {/* Desktop connector rail (steps run left to right) */}
           <div
             className="absolute left-0 right-0 top-6 hidden h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent sm:block"
             aria-hidden="true"
           />
-
-          {/* Laser pulse traveling the full rail, left edge to right edge */}
           <motion.div
             className="pointer-events-none absolute top-6 hidden h-2 w-2 -translate-y-1/2 rounded-full bg-blue-500 shadow-[0_0_10px_3px_rgba(37,99,235,0.6)] sm:block"
-            style={{ left: 0 }}
             initial={{ left: "0%", opacity: 0 }}
-            whileInView={{
-              left: ["0%", "100%"],
-              opacity: [0, 1, 1, 0],
-            }}
+            whileInView={{ left: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{
               left: { duration: 2.6, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.6 },
@@ -48,28 +49,48 @@ export default function Roadmap(): React.ReactElement {
             aria-hidden="true"
           />
 
-          {ROADMAP_STEPS.map((step, i) => (
-            <motion.div
-              key={step.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.12, ease: "easeOut" }}
-              className="relative flex flex-col items-start"
-            >
+          {/* Mobile connector rail (steps stack top to bottom) */}
+          <div
+            className="absolute left-1/2 top-6 bottom-6 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-blue-200 to-transparent sm:hidden"
+            aria-hidden="true"
+          />
+          <motion.div
+            className="pointer-events-none absolute left-1/2 hidden h-2 w-2 -translate-x-1/2 rounded-full bg-blue-500 shadow-[0_0_10px_3px_rgba(37,99,235,0.6)] max-sm:block"
+            initial={{ top: "0%", opacity: 0 }}
+            whileInView={{ top: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{
+              top: { duration: 2.6, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.6 },
+              opacity: { duration: 2.6, times: [0, 0.1, 0.9, 1], repeat: Infinity, repeatDelay: 0.6 },
+            }}
+            aria-hidden="true"
+          />
+
+          {ROADMAP_STEPS.map((step, i) => {
+            const Icon = STEP_ICONS[step.id] ?? UserPlus;
+            return (
               <motion.div
-                whileHover={{ scale: 1.08 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-sm font-bold text-white shadow-lg shadow-blue-500/25"
+                key={step.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: i * 0.12, ease: "easeOut" }}
+                className="relative flex flex-col items-center text-center"
               >
-                {step.index}
+                <motion.div
+                  whileHover={{ scale: 1.08 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25"
+                >
+                  <Icon className="h-5 w-5 text-white" aria-hidden="true" />
+                </motion.div>
+                <h3 className="mt-5 text-lg font-bold text-slate-900">{step.title}</h3>
+                <p className="mt-2 max-w-xs text-sm leading-relaxed text-slate-500">
+                  {step.description}
+                </p>
               </motion.div>
-              <h3 className="mt-5 text-lg font-bold text-slate-900">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                {step.description}
-              </p>
-            </motion.div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="mt-14 flex justify-center">

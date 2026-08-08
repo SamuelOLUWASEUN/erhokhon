@@ -87,7 +87,7 @@ const VISUALS: Record<Exclude<BentoFeature["visual"], "support" | "freeze">, Rea
 
 export default function BentoGrid(): React.ReactElement {
   return (
-    <section id="features" className="px-4 py-20 sm:py-28">
+    <section id="features" className="scroll-mt-20 px-4 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

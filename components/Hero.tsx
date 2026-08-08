@@ -51,11 +51,11 @@ export default function Hero(): React.ReactElement {
         >
           {/* Ambient blue glow behind the render, consistent with the liquid-glass palette */}
           <div
-            className="absolute inset-8 -z-10 rounded-full bg-gradient-to-br from-blue-500/25 to-indigo-500/20 blur-3xl"
+            className="absolute inset-12 -z-10 rounded-full bg-gradient-to-br from-blue-500/20 to-indigo-500/15 blur-3xl"
             aria-hidden="true"
           />
 
-          <div className="relative aspect-[1024/871] w-full overflow-hidden rounded-[2.5rem] shadow-2xl shadow-blue-900/10">
+          <div className="relative aspect-[892/763] w-full overflow-hidden rounded-[2.5rem] shadow-xl shadow-blue-900/10">
             <Image
               src="/images/hero-mockup.png"
               alt="A 3D render of hands holding a smartphone showing the Erhokhon banking app with a $1,648.00 balance and recent transaction history"

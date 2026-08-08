@@ -9,7 +9,7 @@ import LiquidButton from "@/components/LiquidButton";
 
 export default function Pricing(): React.ReactElement {
   return (
-    <section id="pricing" className="px-4 py-20 sm:py-28">
+    <section id="pricing" className="scroll-mt-20 px-4 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -32,7 +32,7 @@ export default function Pricing(): React.ReactElement {
               <GlassCard
                 delay={i * 0.1}
                 className={cn(
-                  "flex flex-col p-8",
+                  "flex flex-col items-center p-8 text-center",
                   tier.featured && "ring-2 ring-blue-500/40 shadow-2xl shadow-blue-500/15"
                 )}
               >
@@ -58,7 +58,7 @@ export default function Pricing(): React.ReactElement {
                     <span className="text-sm font-medium text-slate-500">{tier.cadence}</span>
                   )}
                 </div>
-                <p className="relative mt-3 text-sm leading-relaxed text-slate-500">
+                <p className="relative mt-3 max-w-[220px] text-sm leading-relaxed text-slate-500">
                   {tier.description}
                 </p>
 
@@ -70,7 +70,7 @@ export default function Pricing(): React.ReactElement {
                   {tier.ctaLabel}
                 </LiquidButton>
 
-                <ul className="relative mt-8 flex flex-col gap-3">
+                <ul className="relative mx-auto mt-8 flex w-fit flex-col items-start gap-3">
                   {tier.checklist.map((item) => (
                     <li key={item} className="flex items-center gap-2.5 text-sm text-slate-700">
                       <Check className="h-4 w-4 shrink-0 text-blue-600" aria-hidden="true" />
