@@ -33,7 +33,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>): React.ReactElement {
   return (
     <html lang="en" className={jakarta.variable}>
-      <body className="font-sans">{children}</body>
+      <body className="min-h-screen bg-slate-50 font-sans text-slate-900 antialiased transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+        {children}
+      </body>
     </html>
   );
 }

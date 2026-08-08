@@ -19,7 +19,7 @@ export default function Pricing(): React.ReactElement {
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
             Plans that scale with you
           </h2>
-          <p className="mt-4 text-base text-slate-500 dark:text-slate-400">
+          <p className="mx-auto mt-3 max-w-2xl text-base text-slate-600 dark:text-slate-400 sm:text-lg">
             Choose the perfect tier for your business needs.
           </p>
         </motion.div>
@@ -34,15 +34,15 @@ export default function Pricing(): React.ReactElement {
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
                 className={cn(
-                  "relative flex flex-col items-center overflow-hidden rounded-3xl border p-8 text-center transition-shadow duration-300",
+                  "relative flex flex-col items-center overflow-hidden rounded-3xl p-8 text-center transition-all duration-300",
                   tier.featured
-                    ? "border-blue-500/40 bg-white shadow-2xl shadow-blue-500/15 dark:border-blue-500/30 dark:bg-slate-900"
-                    : "border-slate-200 bg-white shadow-lg shadow-slate-900/5 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"
+                    ? "border-2 border-blue-600 bg-gradient-to-b from-blue-50/50 to-white shadow-xl shadow-blue-500/10 dark:border-blue-500 dark:from-slate-800/80 dark:to-slate-900"
+                    : "border border-slate-200 bg-white shadow-sm hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
                 )}
               >
                 {tier.featured && (
                   <div
-                    className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-blue-600/15 to-transparent"
+                    className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-blue-600/10 to-transparent dark:from-blue-500/15"
                     aria-hidden="true"
                   />
                 )}
@@ -66,11 +66,10 @@ export default function Pricing(): React.ReactElement {
                     </span>
                   )}
                 </div>
-                <p className="relative mt-3 max-w-[220px] text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                <p className="relative mt-3 max-w-[220px] text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                   {tier.description}
                 </p>
 
-                {/* CTA buttons — solid slate for standard, blue gradient for featured */}
                 <a
                   href="#top"
                   className={cn(
@@ -89,7 +88,7 @@ export default function Pricing(): React.ReactElement {
                       key={item}
                       className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300"
                     >
-                      <Check className="h-4 w-4 shrink-0 text-blue-600" aria-hidden="true" />
+                      <Check className="h-4 w-4 shrink-0 text-blue-600 dark:text-blue-400" aria-hidden="true" />
                       {item}
                     </li>
                   ))}

@@ -96,15 +96,15 @@ export default function BentoGrid(): React.ReactElement {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
             Precision Financial Tools
           </h2>
-          <p className="mt-4 text-base text-slate-500">
+          <p className="mt-4 text-base text-slate-500 dark:text-slate-400">
             Experience a banking suite designed for speed, security, and growth.
           </p>
         </motion.div>
 
-        <div className="mt-12 rounded-[2.5rem] border border-white/60 bg-slate-100/70 p-3 shadow-inner sm:p-5">
+        <div className="mt-12 rounded-[2.5rem] border border-white/60 bg-slate-100/70 p-3 shadow-inner dark:bg-slate-900/50 sm:p-5">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {BENTO_FEATURES.map((feature, i) => {
               if (feature.visual === "support") {
@@ -122,11 +122,11 @@ export default function BentoGrid(): React.ReactElement {
                 return (
                   <GlassCard key={feature.id} as="article" delay={(i % 3) * 0.08} className="flex flex-col gap-3 p-6">
                     <div className="relative">
-                      <h3 className="flex items-center gap-1.5 text-base font-bold text-slate-900">
+                      <h3 className="flex items-center gap-1.5 text-base font-bold text-slate-900 dark:text-white">
                         <Snowflake className="h-4 w-4 text-blue-500" aria-hidden="true" />
                         {feature.title}
                       </h3>
-                      <p className="mt-1.5 text-sm leading-relaxed text-slate-500">
+                      <p className="mt-1.5 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
                         {feature.description}
                       </p>
                     </div>
@@ -139,8 +139,8 @@ export default function BentoGrid(): React.ReactElement {
               return (
                 <GlassCard key={feature.id} as="article" delay={(i % 3) * 0.08} className="flex flex-col gap-3 p-6">
                   <div className="relative">
-                    <h3 className="text-base font-bold text-slate-900">{feature.title}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-slate-500">
+                    <h3 className="text-base font-bold text-slate-900 dark:text-white">{feature.title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
                       {feature.description}
                     </p>
                   </div>

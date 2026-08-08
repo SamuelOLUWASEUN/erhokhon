@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-[#f8fafc] text-slate-900 antialiased;
+    @apply bg-slate-50 text-slate-900 antialiased transition-colors duration-300;
     background-image: radial-gradient(
         circle at 15% 0%,
         rgba(37, 99, 235, 0.06),
@@ -17,18 +17,40 @@
       radial-gradient(circle at 85% 15%, rgba(99, 102, 241, 0.05), transparent 45%);
   }
 
+  :is(.dark) body {
+    @apply bg-slate-950 text-slate-100;
+    background-image: radial-gradient(
+        circle at 15% 0%,
+        rgba(37, 99, 235, 0.12),
+        transparent 40%
+      ),
+      radial-gradient(circle at 85% 15%, rgba(99, 102, 241, 0.08), transparent 45%);
+  }
+
   ::selection {
     @apply bg-blue-600/20 text-blue-900;
   }
 
+  :is(.dark) ::selection {
+    @apply bg-blue-500/30 text-blue-200;
+  }
+
   :focus-visible {
     @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white;
+  }
+
+  :is(.dark) :focus-visible {
+    @apply ring-offset-slate-950;
   }
 }
 
 @layer components {
   .glass-surface {
     @apply bg-white/60 backdrop-blur-xl border border-white/80 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8)] shadow-2xl shadow-blue-500/5;
+  }
+
+  :is(.dark) .glass-surface {
+    @apply bg-slate-900/60 border-slate-800 shadow-slate-950/20;
   }
 }
 

@@ -23,10 +23,10 @@ export default function Roadmap(): React.ReactElement {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
             Simple. Transparent. Fast.
           </h2>
-          <p className="mt-4 text-base text-slate-500">
+          <p className="mt-4 text-base text-slate-500 dark:text-slate-400">
             Get started in under a minute with our streamlined onboarding process.
           </p>
         </motion.div>
@@ -84,8 +84,8 @@ export default function Roadmap(): React.ReactElement {
                 >
                   <Icon className="h-5 w-5 text-white" aria-hidden="true" />
                 </motion.div>
-                <h3 className="mt-5 text-lg font-bold text-slate-900">{step.title}</h3>
-                <p className="mt-2 max-w-xs text-sm leading-relaxed text-slate-500">
+                <h3 className="mt-5 text-lg font-bold text-slate-900 dark:text-white">{step.title}</h3>
+                <p className="mt-2 max-w-xs text-sm leading-relaxed text-slate-500 dark:text-slate-400">
                   {step.description}
                 </p>
               </motion.div>

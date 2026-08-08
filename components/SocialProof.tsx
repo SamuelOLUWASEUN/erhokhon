@@ -90,10 +90,10 @@ export default function SocialProof(): React.ReactElement {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
             Reliability you can Count on, every second.
           </h2>
-          <p className="mt-4 text-base text-slate-500">
+          <p className="mt-4 text-base text-slate-500 dark:text-slate-400">
             We certainly have perform beyond your expectations
           </p>
         </motion.div>

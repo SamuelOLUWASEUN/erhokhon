@@ -33,20 +33,20 @@ export default function Testimonials(): React.ReactElement {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="mx-auto max-w-2xl text-center"
           >
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
               What our users are saying
             </h2>
-            <p className="mt-4 text-base text-slate-500">
+            <p className="mt-4 text-base text-slate-500 dark:text-slate-400">
               Discover how our service makes a difference for users worldwide.
             </p>
 
             <div className="mt-6 flex items-center justify-center gap-6">
-              <p className="text-sm font-semibold text-slate-700">2M+ Satisfied Users</p>
+              <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">2M+ Satisfied Users</p>
               <span className="h-1 w-1 rounded-full bg-slate-300" aria-hidden="true" />
               <div className="flex items-center gap-1.5">
-                <p className="text-sm font-semibold text-slate-700">4.8</p>
+                <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">4.8</p>
                 <LiveStars />
-                <p className="text-sm font-semibold text-slate-700">Apple Store Ratings</p>
+                <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Apple Store Ratings</p>
               </div>
             </div>
           </motion.div>
@@ -54,7 +54,7 @@ export default function Testimonials(): React.ReactElement {
           <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
             {TESTIMONIALS.map((testimonial, i) => (
               <GlassCard key={testimonial.id} as="figure" delay={i * 0.1} className="flex flex-col gap-4 p-6">
-                <blockquote className="relative text-sm leading-relaxed text-slate-600">
+                <blockquote className="relative text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                   &ldquo;{testimonial.quote}&rdquo;
                 </blockquote>
                 <figcaption className="relative mt-auto flex items-center gap-3">
@@ -68,8 +68,8 @@ export default function Testimonials(): React.ReactElement {
                     />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-slate-900">{testimonial.name}</p>
-                    <p className="text-xs text-slate-500">{testimonial.role}</p>
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white">{testimonial.name}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{testimonial.role}</p>
                   </div>
                 </figcaption>
               </GlassCard>
