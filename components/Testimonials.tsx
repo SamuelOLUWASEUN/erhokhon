@@ -4,7 +4,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { AVATAR_URLS, TESTIMONIALS } from "@/lib/data";
-import GlassCard from "@/components/GlassCard";
 import LiquidButton from "@/components/LiquidButton";
 
 function LiveStars(): React.ReactElement {
@@ -36,13 +35,13 @@ export default function Testimonials(): React.ReactElement {
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
               What our users are saying
             </h2>
-            <p className="mt-4 text-base text-slate-500 dark:text-slate-400">
+            <p className="mx-auto mt-3 max-w-2xl text-base text-slate-600 dark:text-slate-400 sm:text-lg">
               Discover how our service makes a difference for users worldwide.
             </p>
 
             <div className="mt-6 flex items-center justify-center gap-6">
               <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">2M+ Satisfied Users</p>
-              <span className="h-1 w-1 rounded-full bg-slate-300" aria-hidden="true" />
+              <span className="h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-600" aria-hidden="true" />
               <div className="flex items-center gap-1.5">
                 <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">4.8</p>
                 <LiveStars />
@@ -53,11 +52,19 @@ export default function Testimonials(): React.ReactElement {
 
           <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
             {TESTIMONIALS.map((testimonial, i) => (
-              <GlassCard key={testimonial.id} as="figure" delay={i * 0.1} className="flex flex-col gap-4 p-6">
-                <blockquote className="relative text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+              <motion.figure
+                key={testimonial.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
+                className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 dark:border-slate-800 dark:bg-slate-900/90 dark:shadow-none"
+              >
+                <blockquote className="text-sm leading-relaxed text-slate-700 dark:text-slate-200">
                   &ldquo;{testimonial.quote}&rdquo;
                 </blockquote>
-                <figcaption className="relative mt-auto flex items-center gap-3">
+                <figcaption className="mt-auto flex items-center gap-3">
                   <div className="relative h-10 w-10 overflow-hidden rounded-full">
                     <Image
                       src={testimonial.avatarUrl}
@@ -72,7 +79,7 @@ export default function Testimonials(): React.ReactElement {
                     <p className="text-xs text-slate-500 dark:text-slate-400">{testimonial.role}</p>
                   </div>
                 </figcaption>
-              </GlassCard>
+              </motion.figure>
             ))}
           </div>
         </div>

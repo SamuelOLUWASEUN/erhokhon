@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { Coins, ShieldCheck } from "lucide-react";
 import { AVATAR_URLS, METRIC_CARDS } from "@/lib/data";
 import { cn } from "@/lib/utils";
-import GlassCard from "@/components/GlassCard";
 
 function WaveGraphic(): React.ReactElement {
   return (
@@ -32,7 +31,6 @@ function WaveGraphic(): React.ReactElement {
   );
 }
 
-/** Small ring that draws itself to ~99.99%, giving the uptime figure a live, measured feel. */
 function UptimeRing(): React.ReactElement {
   const radius = 18;
   const circumference = 2 * Math.PI * radius;
@@ -40,7 +38,7 @@ function UptimeRing(): React.ReactElement {
   return (
     <div className="relative flex h-11 w-11 items-center justify-center">
       <svg viewBox="0 0 44 44" className="h-11 w-11 -rotate-90" aria-hidden="true">
-        <circle cx="22" cy="22" r={radius} fill="none" stroke="#e2e8f0" strokeWidth="4" />
+        <circle cx="22" cy="22" r={radius} fill="none" stroke="#e2e8f0" strokeWidth="4" className="dark:stroke-slate-700" />
         <motion.circle
           cx="22"
           cy="22"
@@ -64,7 +62,6 @@ function UptimeRing(): React.ReactElement {
   );
 }
 
-/** Coin badge with a spring pop-in — gives the $0 fees card the same sense of life as the others. */
 function FeesBadge(): React.ReactElement {
   return (
     <motion.div
@@ -72,9 +69,9 @@ function FeesBadge(): React.ReactElement {
       whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
       viewport={{ once: true }}
       transition={{ type: "spring", stiffness: 260, damping: 16, delay: 0.2 }}
-      className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-50"
+      className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-50 dark:bg-emerald-950"
     >
-      <Coins className="h-5 w-5 text-emerald-600" aria-hidden="true" />
+      <Coins className="h-5 w-5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
     </motion.div>
   );
 }
@@ -93,74 +90,86 @@ export default function SocialProof(): React.ReactElement {
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
             Reliability you can Count on, every second.
           </h2>
-          <p className="mt-4 text-base text-slate-500 dark:text-slate-400">
+          <p className="mx-auto mt-3 max-w-xl text-base text-slate-600 dark:text-slate-400 sm:text-lg">
             We certainly have perform beyond your expectations
           </p>
         </motion.div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {METRIC_CARDS.map((card, i) => (
-            <GlassCard
-              key={card.id}
-              variant={card.variant === "accent" ? "accent" : "glass"}
-              delay={i * 0.08}
-              className="flex min-h-[220px] flex-col items-center justify-between p-6 text-center"
-            >
-              {card.visual === "avatars" && (
-                <div className="relative flex -space-x-3">
-                  {AVATAR_URLS.map((url, idx) => (
-                    <div
-                      key={url}
-                      className="relative h-9 w-9 overflow-hidden rounded-full border-2 border-white shadow-sm"
-                      style={{ zIndex: AVATAR_URLS.length - idx }}
+          {METRIC_CARDS.map((card, i) => {
+            const isAccent = card.variant === "accent";
+
+            return (
+              <motion.div
+                key={card.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                whileHover={{ y: -6, scale: 1.01 }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
+                className={cn(
+                  "relative flex min-h-[220px] flex-col items-center justify-between overflow-hidden rounded-3xl p-6 text-center transition-all duration-300",
+                  isAccent
+                    ? "bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-xl shadow-blue-500/30"
+                    : "border border-slate-200/80 bg-white shadow-sm backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-900/90 dark:shadow-none"
+                )}
+              >
+                {card.visual === "avatars" && (
+                  <div className="relative flex -space-x-3">
+                    {AVATAR_URLS.map((url, idx) => (
+                      <div
+                        key={url}
+                        className="relative h-9 w-9 overflow-hidden rounded-full border-2 border-white shadow-sm dark:border-slate-800"
+                        style={{ zIndex: AVATAR_URLS.length - idx }}
+                      >
+                        <Image src={url} alt="" fill sizes="36px" className="object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {card.visual === "uptime" && <UptimeRing />}
+                {card.visual === "fees" && <FeesBadge />}
+                {card.visual === "wave" && (
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15">
+                    <ShieldCheck className="h-5 w-5 text-white" aria-hidden="true" />
+                  </div>
+                )}
+
+                <div className="relative z-10 mt-auto">
+                  <p
+                    className={cn(
+                      "text-3xl font-bold tracking-tight",
+                      isAccent ? "text-white" : "text-slate-900 dark:text-white"
+                    )}
+                  >
+                    {card.value}
+                  </p>
+                  {card.label && (
+                    <p
+                      className={cn(
+                        "mt-1 text-xs font-semibold sm:text-sm",
+                        isAccent ? "text-white/90" : "text-slate-600 dark:text-slate-400"
+                      )}
                     >
-                      <Image src={url} alt="" fill sizes="36px" className="object-cover" />
-                    </div>
-                  ))}
-                </div>
-              )}
-              {card.visual === "uptime" && <UptimeRing />}
-              {card.visual === "fees" && <FeesBadge />}
-              {card.visual === "wave" && (
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15">
-                  <ShieldCheck className="h-5 w-5 text-white" aria-hidden="true" />
-                </div>
-              )}
-
-              <div className="relative z-10 mt-auto">
-                <p
-                  className={cn(
-                    "text-3xl font-extrabold tracking-tight",
-                    card.variant === "accent" ? "text-white" : "text-slate-900"
+                      {card.label}
+                    </p>
                   )}
-                >
-                  {card.value}
-                </p>
-                {card.label && (
-                  <p
-                    className={cn(
-                      "mt-1 text-sm font-semibold",
-                      card.variant === "accent" ? "text-white/90" : "text-slate-700"
-                    )}
-                  >
-                    {card.label}
-                  </p>
-                )}
-                {card.description && (
-                  <p
-                    className={cn(
-                      "mt-2 text-xs leading-relaxed",
-                      card.variant === "accent" ? "text-white/80" : "text-slate-500"
-                    )}
-                  >
-                    {card.description}
-                  </p>
-                )}
-              </div>
+                  {card.description && (
+                    <p
+                      className={cn(
+                        "mt-2 text-xs leading-relaxed sm:text-sm",
+                        isAccent ? "text-white/80" : "text-slate-600 dark:text-slate-400"
+                      )}
+                    >
+                      {card.description}
+                    </p>
+                  )}
+                </div>
 
-              {card.visual === "wave" && <WaveGraphic />}
-            </GlassCard>
-          ))}
+                {card.visual === "wave" && <WaveGraphic />}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
